@@ -7,11 +7,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "ant-design-vue": "^2.1.2",
     "vue": "^3.0.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.1",
     "@vue/compiler-sfc": "^3.0.5",
+    "less": "^4.1.1",
     "vite": "^2.1.5"
   }
 }
