@@ -15,12 +15,12 @@ import Header from "./components/Header.vue";
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding-top: 24px;
 }
 </style>
 
 <style lang="less" scoped>
 .content {
-  margin: 24px;
+  margin: 0 24px;
 }
 </style>
