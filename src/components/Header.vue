@@ -5,7 +5,7 @@
       v-for="(engine, index) in engines"
       :key="engine.key"
       :class="{ active: index === engineIndex }"
-      @click="changeEngine(index)"
+      @click="onClickEngine(index)"
       >{{ engine.name }}</a-button
     >
   </div>
@@ -16,71 +16,35 @@
     class="search-input"
     v-model:value="input"
     placeholder="搜索"
-    @search="onSearch"
+    @search="handleSearch(engines[engineIndex].queryURL)"
   />
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
-const enginesData = [
-  {
-    key: "bing.com",
-    name: "Bing",
-    queryURL: "https://www.bing.com/search?q=%s&FORM=CHROMN",
-  },
-  {
-    key: "baidu.com",
-    name: "Baidu",
-    queryURL: "https://www.baidu.com/s?wd=%s",
-  },
-  {
-    key: "google.com",
-    name: "Google",
-    queryURL: "https://www.google.com/search?q=%s",
-  },
-  {
-    key: "github.com",
-    name: "Github",
-    queryURL: "https://github.com/search?q=%s",
-  },
-  {
-    key: "npmjs.com",
-    name: "npm",
-    queryURL: "https://www.npmjs.com/search?q=%s",
-  },
-  {
-    key: "gitee.com",
-    name: "Gitee",
-    queryURL: "https://search.gitee.com/?type=repository&q=%s",
-  },
-];
+import useSearchInput from "../composables/useSearchInput";
+import useEngines from "../composables/useEngines";
 
 export default defineComponent({
   setup() {
-    const input = ref("");
-    const engines = ref(enginesData);
-    const engineIndex = ref(0);
+    const { index: engineIndex, engines, handleChangeEngine } = useEngines(1);
+    const { input, handleSearch } = useSearchInput();
 
-    const onSearch = (searchValue) => {
-      const engine = engines.value[engineIndex.value];
-      const queryURL = engine.queryURL.replace("%s", searchValue);
-      window.open(queryURL, "_blank");
-    };
-
-    const changeEngine = (index) => {
-      engineIndex.value = index;
+    const onClickEngine = (index) => {
+      handleChangeEngine(index);
 
       if (input.value !== "") {
-        onSearch(input.value);
+        handleSearch(engines[engineIndex.value].queryURL);
       }
     };
 
     return {
-      input,
-      engineIndex,
       engines,
-      onSearch,
-      changeEngine,
+      engineIndex,
+      handleChangeEngine,
+      input,
+      handleSearch,
+      onClickEngine,
     };
   },
 });
