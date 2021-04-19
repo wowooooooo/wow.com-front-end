@@ -9,6 +9,10 @@ import Header from "./components/Header.vue";
 </script>
 
 <style>
+:root {
+  --primary-color: #1890ff;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

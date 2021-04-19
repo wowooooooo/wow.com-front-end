@@ -1,44 +1,56 @@
 <template>
   <div class="search-engine-wrap">
-    <a-button
-      type="link"
+    <Button
+      type="text"
       v-for="(engine, index) in engines"
       :key="engine.key"
       :class="{ active: index === engineIndex }"
       @click="onClickEngine(index)"
-      >{{ engine.name }}</a-button
+      >{{ engine.name }}</Button
     >
   </div>
 
-  <a-input-search
-    ref="search-input"
-    size="large"
-    class="search-input"
-    v-model:value="input"
+  <InputSearch
+    ref="inputRef"
+    class="input-search"
     placeholder="搜索"
+    v-model:value="input"
     @search="handleSearch(engines[engineIndex].queryURL)"
   />
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
+import Button from "./Button.vue";
+import InputSearch from "./InputSearch.vue";
 import useSearchInput from "../composables/useSearchInput";
 import useEngines from "../composables/useEngines";
 
 export default defineComponent({
+  components: { Button, InputSearch },
   setup() {
+    const inputRef = ref();
     const { index: engineIndex, engines, handleChangeEngine } = useEngines(1);
     const { input, handleSearch } = useSearchInput();
 
+    /**
+     * @desc 点击当前引擎，进入引擎首页；
+     * @desc 输入框为空时，点击其他引擎，切换引擎；
+     * @desc 输入框不为空时，点击其他引擎，进行检索；
+     */
     const onClickEngine = (index) => {
-      handleChangeEngine(index);
-
-      if (input.value !== "") {
+      if (index === engineIndex.value || input.value !== "") {
         handleSearch(engines[engineIndex.value].queryURL);
       }
+
+      handleChangeEngine(index);
+
+      // 聚焦输入框
+      inputRef.value.inputEl.focus();
     };
 
     return {
+      inputRef,
       engines,
       engineIndex,
       handleChangeEngine,
@@ -52,19 +64,13 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .search-engine-wrap {
-  .ant-btn-link {
-    color: #666;
-
-    &.active,
-    &:hover {
-      color: #1890ff;
-    }
+  .w-btn-text {
     &.active {
-      border-color: transparent;
+      color: var(--primary-color);
     }
   }
 }
-.search-input {
+.input-search {
   max-width: 680px;
 }
 </style>
