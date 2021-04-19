@@ -38,6 +38,7 @@ export default function useEngines(defaultIndex) {
 
   const handleChangeEngine = (idx) => {
     index.value = idx;
+    window.localStorage.setItem("enginIndex", idx);
   };
 
   return {

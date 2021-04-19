@@ -30,7 +30,10 @@ export default defineComponent({
   components: { Button, InputSearch },
   setup() {
     const inputRef = ref();
-    const { index: engineIndex, engines, handleChangeEngine } = useEngines(1);
+    const defaultEngine = parseInt(localStorage.getItem("enginIndex")) || 0;
+    const { index: engineIndex, engines, handleChangeEngine } = useEngines(
+      defaultEngine
+    );
     const { input, handleSearch } = useSearchInput();
 
     /**
