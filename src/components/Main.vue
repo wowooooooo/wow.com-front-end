@@ -1,5 +1,9 @@
 <template>
   <div class="main">
+    <CategoryWrap title="热榜">
+      <TopicCard title="掘金热门" :list="jueJinRecommended" />
+    </CategoryWrap>
+
     <CategoryWrap v-for="(sites, key) in categories" :key="key" :title="key">
       <SiteCard v-for="site in sites" :data="site" :key="site.name" />
     </CategoryWrap>
@@ -9,6 +13,8 @@
 <script>
 import CategoryWrap from "./CategoryWrap.vue";
 import SiteCard from "./SiteCard.vue";
+import TopicCard from "./TopicCard.vue";
+import { getJueJinRecommended } from "../../src/api/index.js";
 
 const categories = {
   阅读: [
@@ -113,6 +119,61 @@ export default {
   components: {
     CategoryWrap,
     SiteCard,
+    TopicCard,
+  },
+
+  data() {
+    return {
+      jueJinRecommended: [],
+    };
+  },
+  mounted() {
+    this.init();
+  },
+
+  methods: {
+    init() {
+      this.getJueJinRecommended();
+    },
+    async getJueJinRecommended() {
+      try {
+        const {
+          data: {
+            data: { data },
+          },
+        } = await getJueJinRecommended({
+          client_type: 2608,
+          cursor: "0",
+          id_type: 2,
+          limit: 20,
+          sort_type: 200,
+        });
+        const list = [];
+        data.forEach((d) => {
+          const { item_type, item_info } = d;
+
+          if (item_type === 14) {
+            const { title, url } = item_info;
+            list.push({
+              title,
+              url,
+            });
+          }
+          if (item_type === 2) {
+            const { title, link_url } = item_info.article_info;
+
+            list.push({
+              title,
+              url: link_url || `https://juejin.cn/post/${item_info.article_id}`,
+            });
+          }
+        });
+
+        this.jueJinRecommended = list;
+      } catch (error) {
+        console.log("err", error);
+      }
+    },
   },
 };
 </script>
