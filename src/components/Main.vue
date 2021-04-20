@@ -133,14 +133,13 @@ export default {
 
   methods: {
     init() {
+      console.log(import.meta.env);
       this.getJueJinRecommended();
     },
     async getJueJinRecommended() {
       try {
         const {
-          data: {
-            data: { data },
-          },
+          data: { data },
         } = await getJueJinRecommended({
           client_type: 2608,
           cursor: "0",
