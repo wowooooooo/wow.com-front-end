@@ -11,7 +11,12 @@ export default defineConfig({
     proxy: {
       // 选项写法
       "/juejin": {
-        target: "http://127.0.0.1:7001",
+        target: "https://api.1024bytelab.com:7001",
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+      "/zhihu": {
+        target: "https://api.1024bytelab.com:7001",
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ""),
       },

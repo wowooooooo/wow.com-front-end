@@ -1,6 +1,7 @@
 <template>
   <div class="main">
     <CategoryWrap title="热榜">
+      <TopicCard title="知乎热榜" :list="zhiHuHotList" />
       <TopicCard title="掘金热门" :list="jueJinRecommended" />
     </CategoryWrap>
 
@@ -14,7 +15,7 @@
 import CategoryWrap from "./CategoryWrap.vue";
 import SiteCard from "./SiteCard.vue";
 import TopicCard from "./TopicCard.vue";
-import { getJueJinRecommended } from "../../src/api/index.js";
+import { getJueJinRecommended, getZhiHuHotList } from "../../src/api/index.js";
 
 const categories = {
   阅读: [
@@ -125,6 +126,7 @@ export default {
   data() {
     return {
       jueJinRecommended: [],
+      zhiHuHotList: [],
     };
   },
   mounted() {
@@ -133,8 +135,8 @@ export default {
 
   methods: {
     init() {
-      console.log(import.meta.env);
       this.getJueJinRecommended();
+      this.getZhiHuHotList();
     },
     async getJueJinRecommended() {
       try {
@@ -172,6 +174,21 @@ export default {
       } catch (error) {
         console.log("err", error);
       }
+    },
+    async getZhiHuHotList() {
+      try {
+        const {
+          data: { data },
+        } = await getZhiHuHotList();
+
+        const list = data.map((d) => ({
+          title: d.target.title,
+          url: d.target.url,
+          hot: d.detail_text,
+        }));
+
+        this.zhiHuHotList = list;
+      } catch (error) {}
     },
   },
 };

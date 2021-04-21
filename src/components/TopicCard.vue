@@ -27,6 +27,7 @@ export default {
   width: 398px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
+  margin: 7px;
 }
 .title {
   color: #17233d;
