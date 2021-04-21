@@ -43,7 +43,7 @@ export default defineComponent({
      */
     const onClickEngine = (index) => {
       if (index === engineIndex.value || input.value !== "") {
-        handleSearch(engines[engineIndex.value].queryURL);
+        handleSearch(engines[index].queryURL);
       }
 
       handleChangeEngine(index);
