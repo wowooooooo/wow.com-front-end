@@ -9,3 +9,5 @@ export const getJueJinRecommended = (data) =>
 
 export const getZhiHuHotList = () =>
   _.get("zhihu/api/v3/feed/topstory/hot-lists/total?limit=50&desktop=true");
+
+export const getWeiboTop = () => _.get("weibo/top");

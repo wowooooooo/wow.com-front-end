@@ -20,6 +20,11 @@ export default defineConfig({
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, ""),
       },
+      "/weibo": {
+        target: "https://api.1024bytelab.com:7001",
+        changeOrigin: true,
+        // rewrite: (path) => path.replace(/^\/api/, ""),
+      },
     },
   },
 });

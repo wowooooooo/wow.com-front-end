@@ -3,6 +3,7 @@
     <CategoryWrap title="热榜">
       <TopicCard title="知乎热榜" :list="zhiHuHotList" />
       <TopicCard title="掘金热门" :list="jueJinRecommended" />
+      <TopicCard title="微博热搜" :list="weiboTop" />
     </CategoryWrap>
 
     <CategoryWrap v-for="(sites, key) in categories" :key="key" :title="key">
@@ -15,7 +16,11 @@
 import CategoryWrap from "./CategoryWrap.vue";
 import SiteCard from "./SiteCard.vue";
 import TopicCard from "./TopicCard.vue";
-import { getJueJinRecommended, getZhiHuHotList } from "../../src/api/index.js";
+import {
+  getJueJinRecommended,
+  getZhiHuHotList,
+  getWeiboTop,
+} from "../../src/api/index.js";
 
 const categories = {
   阅读: [
@@ -127,6 +132,7 @@ export default {
     return {
       jueJinRecommended: [],
       zhiHuHotList: [],
+      weiboTop: [],
     };
   },
   mounted() {
@@ -137,6 +143,7 @@ export default {
     init() {
       this.getJueJinRecommended();
       this.getZhiHuHotList();
+      this.getWeiboTop();
     },
     async getJueJinRecommended() {
       try {
@@ -188,6 +195,13 @@ export default {
         }));
 
         this.zhiHuHotList = list;
+      } catch (error) {}
+    },
+
+    async getWeiboTop() {
+      try {
+        const { data } = await getWeiboTop();
+        this.weiboTop = data;
       } catch (error) {}
     },
   },
