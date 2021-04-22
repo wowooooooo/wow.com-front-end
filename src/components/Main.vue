@@ -190,7 +190,7 @@ export default {
 
         const list = data.map((d) => ({
           title: d.target.title,
-          url: d.target.url,
+          url: `https://zhihu.com/${d.target.type}/${d.target.id}`,
           hot: d.detail_text,
         }));
 
