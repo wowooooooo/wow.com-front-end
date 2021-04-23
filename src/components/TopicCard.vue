@@ -24,7 +24,7 @@ export default {
 
 <style lang="less" scoped>
 .topic-card {
-  width: 398px;
+  width: 410px;
   border: 1px solid var(--border-color);
   border-radius: 4px;
   margin: 7px;

@@ -211,6 +211,7 @@ export default {
 <style lang="less" scoped>
 .main {
   flex: 1;
-  margin: 0 24px;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 </style>
